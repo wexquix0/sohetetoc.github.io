@@ -90,18 +90,29 @@
             <button onclick="sendMessage()">Gönder</button>
         </div>
     </div>
+
     <script>
         async function sendMessage() {
             const userInput = document.getElementById('userInput').value;
             if (!userInput.trim()) return;
+
+            
             document.getElementById('chat').innerHTML += `
                 <div class="message user-message">${userInput}</div>
-            `;            
+            `;
+
+            
             try {
                 const response = await fetch(`https://tilki.dev/api/hercai?soru=${encodeURIComponent(userInput)}`);
-                const data = await response.json();               
-                console.log('API Yanıtı:', data);              
-                const botResponse = data.cevap || "Üzgünüm, yanıt bulamadım.")    
+                const data = await response.json();
+
+                
+                console.log('API Yanıtı:', data);
+
+                
+                const botResponse = data.cevap || "Üzgünüm, yanıt bulamadım.";
+
+                
                 document.getElementById('chat').innerHTML += `
                     <div class="message bot-message">${botResponse}</div>
                 `;
@@ -110,7 +121,10 @@
                 document.getElementById('chat').innerHTML += `
                     <div class="message bot-message">Bir hata oluştu. Lütfen tekrar deneyin.</div>
                 `;
-            }  
+            }
+
+  
+  
             document.getElementById('userInput').value = '';
             document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
         }
